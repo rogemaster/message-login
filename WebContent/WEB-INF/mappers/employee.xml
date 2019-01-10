@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="employee">
+
+<select resultType="java.util.HashMap" id="getAllDepartments"> 
+	select * from department order by did asc 
+</select>
+
+<select resultType="java.util.HashMap" id="getAllPositions"> 
+	select * from position order by pid asc 
+</select>
+
+<select resultType="java.lang.Integer" id="getEmployeeSeq">
+	select employee_seq.nextval from dual 
+	</select>
+
+<insert id="addEmployee" parameterType="java.util.HashMap">
+	insert into employee values(#{id}, '1111', #{name}, #{did}, #{pid}, to_date(#{joindate}, 'YYYY-MM-DD')) 
+</insert>
+
+<select id="getEmployeeInfo" resultType="java.util.HashMap" parameterType="java.lang.String">
+	 select * from position join (select * from department join (select * from employee where id = #{id})t on department.did = t.did)p on position.pid = p.pid
+</select>
+
+<update id="updatePassWord" parameterType="java.util.HashMap">
+	update EMPLOYEE set PASS = #{pass} where id = #{id}
+</update>
+
+<select id="getAllInfo" resultType="java.util.HashMap" parameterType="java.lang.String">
+	 select * from position join (select * from department join (select * from employee where id like #{id})t on department.did = t.did)p on position.pid = p.pid
+</select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="message">
+
+<select id="getAllMessage" resultType="java.util.HashMap" parameterType="java.lang.String">
+	select * from message where receiver = #{receiver} order by receivedate desc
+</select>
+
+<insert id="addSendPostHandler" parameterType="java.util.HashMap">
+	insert into message values (#{code}, #{sender}, #{receiver}, #{content}, sysdate, null)
+</insert>
+
+<!-- 
+<update id="updateReceivedate" parameterType="java.lang.String">
+	update message set receivedate = sysdate where code = #{code}
+</update>
+ -->
+ 
+</mapper>
